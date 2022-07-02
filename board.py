@@ -76,6 +76,7 @@ def win(board, piece):
                     and board[r - 3][c + 3] == piece):
                 return True
 
+
 board = create_board()
 print_board(board)
 game_over = False
@@ -87,7 +88,7 @@ if selection == 1:
     while not game_over:
         # Ask for player 1 input
         if turn == 0:
-            col = int(input("Player 1, Make your Selection(0-6):"))
+            col = int(input("Player 1: Select Column(0-6):"))
             # Player 1 will drop a piece on the board
             if is_valid(board, col):
                 row = next_row(board, col)
@@ -105,7 +106,7 @@ if selection == 1:
                     turn = turn % 2
         # Ask for player 2 input
         else:
-            col = int(input("Player 2, Make your Selection(0-6):"))
+            col = int(input("Player 2: Select Column(0-6):"))
             # Player 2 will drop a piece on the board
             if is_valid(board, col):
                 row = next_row(board, col)
@@ -128,43 +129,4 @@ if selection == 1:
         turn = turn % 2
 else:
     game_over = True
-
-
-# def horizwin():
-#     if board[0][0] == 0:
-#         print(board[0][0])
-#         print("this works")
-
-
-"""
-1 player 1 piece
-2 player 2 piece
-
-[0-5][0-6]
-
-horiz
-board[X][Y]
-count = 0
-
-for (int Y = 6; Y>=0; Y--)
-if count == 4
-    if board[curX][curY] = 1
-        player 1 win
-        break
-    else
-        player2 win
-        break
-        
-if board[curX][Y] = 1board[curX][Y-1]
-    count ++
-
-
-vert
-board[][]
-
-diag
-board[][]
-
-
-"""
 
