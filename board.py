@@ -29,11 +29,16 @@ def next_row(board, col):
 
 # Checks to see if the board is full
 def board_full():
-    for c in range(COL_COUNT):
-        if board[5][c] == 0:
-            return False
-        else:
-            return True
+    if(board[5][0] == 0
+            and board[5][1] == 0
+            and board[5][2] == 0
+            and board[5][3] == 0
+            and board[5][4] == 0
+            and board[5][5] == 0
+            and board[5][6] == 0):
+        return False
+    else:
+        return True
 
 
 def print_board(board):
