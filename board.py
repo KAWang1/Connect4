@@ -39,7 +39,9 @@ def board_full():
 def print_board(board):
     print(np.flip(board, 0))
 
+
 def win(board, piece):
+
     # Checks horizontal win conditions
     for c in range(COL_COUNT - 3):
         for r in range(ROW_COUNT):
@@ -78,13 +80,14 @@ def win(board, piece):
 
 
 board = create_board()
-print_board(board)
 game_over = False
 turn = 0
 
 
 selection = int(input("CONNECT 4\n1)Play\n2)Exit\n"))
 if selection == 1:
+    print("  0  1  2  3  4  5  6")
+    print_board(board)
     while not game_over:
         # Ask for player 1 input
         if turn == 0:
@@ -123,6 +126,7 @@ if selection == 1:
                     turn += 1
                     turn = turn % 2
 
+        print("  0  1  2  3  4  5  6")
         print_board(board)
 
         turn += 1
