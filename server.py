@@ -1,5 +1,5 @@
 import socket
-import sys
+# import sys
 import threading
 
 HEADER = 64
@@ -39,9 +39,9 @@ def start():
     server.listen()
     print(f"[LISTENING] Server is listening on {SERVER}")
     while True:
-        server_command = input("Type \"exit\" to close server\n")
-        if server_command == "exit":
-            sys.exit()
+        # server_command = input("Type \"exit\" to close server\n")
+        # if server_command == "exit":
+        #     sys.exit()
         conn, addr = server.accept()
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
