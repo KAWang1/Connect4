@@ -89,8 +89,106 @@ game_over = False
 turn = 0
 
 
-selection = int(input("CONNECT 4\n1)Play\n2)Exit\n"))
+selection = int(input("CONNECT 4\n1)Player vs Player\n2)Player vs AI\n3)Online\n4)Exit\n"))
+# Player vs Player
 if selection == 1:
+    print("  0  1  2  3  4  5  6")
+    print_board(board)
+    while not game_over:
+        # Ask for player 1 input
+        if turn == 0:
+            col = int(input("Player 1: Select Column(0-6):"))
+            # Player 1 will drop a piece on the board
+            if is_valid(board, col):
+                row = next_row(board, col)
+                play_piece(board, row, col, 1)
+                if win(board, 1):
+                    print("Player 1 Wins")
+                    game_over = True
+            else:
+                if board_full():
+                    print("Tie")
+                    game_over = True
+                else:
+                    print("Move not valid")
+                    turn += 1
+                    turn = turn % 2
+        # Ask for player 2 input
+        else:
+            col = int(input("Player 2: Select Column(0-6):"))
+            # Player 2 will drop a piece on the board
+            if is_valid(board, col):
+                row = next_row(board, col)
+                play_piece(board, row, col, 2)
+                if win(board, 2):
+                    print("Player 2 Wins")
+                    game_over = True
+            else:
+                if board_full():
+                    print("Tie")
+                    game_over = True
+                else:
+                    print("Move not valid")
+                    turn += 1
+                    turn = turn % 2
+
+        print("  0  1  2  3  4  5  6")
+        print_board(board)
+
+        turn += 1
+        turn = turn % 2
+
+# Player vs AI
+if selection == 2:
+    # ADD AI CODE------------------------------------------------------------------
+    print("  0  1  2  3  4  5  6")
+    print_board(board)
+    while not game_over:
+        # Ask for player 1 input
+        if turn == 0:
+            col = int(input("Player 1: Select Column(0-6):"))
+            # Player 1 will drop a piece on the board
+            if is_valid(board, col):
+                row = next_row(board, col)
+                play_piece(board, row, col, 1)
+                if win(board, 1):
+                    print("Player 1 Wins")
+                    game_over = True
+            else:
+                if board_full():
+                    print("Tie")
+                    game_over = True
+                else:
+                    print("Move not valid")
+                    turn += 1
+                    turn = turn % 2
+        # Ask for player 2 input
+        else:
+            col = int(input("Player 2: Select Column(0-6):"))
+            # Player 2 will drop a piece on the board
+            if is_valid(board, col):
+                row = next_row(board, col)
+                play_piece(board, row, col, 2)
+                if win(board, 2):
+                    print("Player 2 Wins")
+                    game_over = True
+            else:
+                if board_full():
+                    print("Tie")
+                    game_over = True
+                else:
+                    print("Move not valid")
+                    turn += 1
+                    turn = turn % 2
+
+        print("  0  1  2  3  4  5  6")
+        print_board(board)
+
+        turn += 1
+        turn = turn % 2
+
+# Online
+if selection == 3:
     print("  0  1  2  3  4  5  6")
     print_board(board)
     while not game_over:
