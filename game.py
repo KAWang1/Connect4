@@ -1,6 +1,8 @@
 import numpy as np
 
 # Constant Row and Column length
+from client import send
+
 ROW_COUNT = 6
 COL_COUNT = 7
 
@@ -195,6 +197,8 @@ if selection == 3:
         # Ask for player 1 input
         if turn == 0:
             col = int(input("Player 1: Select Column(0-6):"))
+            message = f"1,{col}"
+            send(message)
             # Player 1 will drop a piece on the board
             if is_valid(board, col):
                 row = next_row(board, col)
