@@ -25,8 +25,8 @@ ADDR = (SERVER, PORT)
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
-# receive_message = "0,0"
-receive_message = ""
+receive_message = "0,0"
+# receive_message = "1,0"
 
 
 def send(msg):
@@ -53,14 +53,14 @@ def receive():
 
 def get_player_move():
     global receive_message
-    player_move = receive_message[2:3]
+    player_move = int(receive_message[2:3])
     return player_move
 
 
 def get_player_number():
     global receive_message
     # global player_number
-    player_number = receive_message[0:1]
+    player_number = int(receive_message[0:1])
     # player_number = 1
     return player_number
 

@@ -11,6 +11,8 @@ ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
 # print(SERVER)
+lock = threading.Lock()
+all_clients = []
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
@@ -31,7 +33,9 @@ def handle_client(conn, addr):
 
             print(f"[{addr}] {msg}")
             # conn.send("Msg received".encode(FORMAT))
-            conn.send(f"{msg}".encode(FORMAT))
+            with lock:
+                for c in all_clients:
+                    c.sendall(f"{msg}".encode(FORMAT))
 
     conn.close()
 
@@ -77,6 +81,8 @@ def start():
         # if server_command == "exit":
         #     sys.exit()
         conn, addr = server.accept()
+        with lock:
+            all_clients.append(conn)
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")

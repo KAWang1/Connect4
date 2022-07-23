@@ -225,8 +225,8 @@ if selection == 3:
                         turn = turn % 2
             # Ask for player 2 input
             else:
-                while get_player_number() != "2":
-                    time.sleep(1)
+                while get_player_number() != 2:
+                    time.sleep(2)
                 # col = int(input("Player 2: Select Column(0-6):"))
                 col = get_player_move()
                 # Player 2 will drop a piece on the board
@@ -258,8 +258,8 @@ if selection == 3:
         print_board(board)
         while not game_over:
             print(get_player_number(), "player num")
-            while get_player_number() != "1":
-                time.sleep(1)
+            while get_player_number() != 1:
+                time.sleep(2)
                 print(get_player_number(), "player num")
                 # receive()
             # Ask for player 1 input
