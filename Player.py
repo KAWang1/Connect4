@@ -1,7 +1,7 @@
 WINDOW_LENGTH = 4
 EMPTY = 0
-PLAYER_PIECE = 0
-AI_PIECE = 1
+PLAYER_PIECE = 1
+AI_PIECE = 2
 
 def score_position(board, piece):
   score = 0
