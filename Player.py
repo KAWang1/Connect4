@@ -178,7 +178,7 @@ while not game_over:
 
  
 
-            if Gamemode == "AIEasy"
+            if Gamemode == "AIEasy":
 
             # # Random move for Player2             
                 col = random.randint(0,6)
@@ -195,11 +195,11 @@ while not game_over:
                         game_over = True
 
  
-            elif Gamemode == "AIMedium"
+            elif Gamemode == "AIMedium":
 
  
 
-            elif Gamemode == "AIHard"
+            elif Gamemode == "AIHard":
                 if turn == AI and not game_over: #asking for Player 2
                    
                    col, minimax_score = minimax(board, depth=5, alpha=-math.inf, beta=math.inf, maximinzingPlayer=True)
