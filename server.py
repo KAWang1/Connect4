@@ -35,9 +35,42 @@ def handle_client(conn, addr):
 
     conn.close()
 
+# currentId = "1"
+# pos = ["1,", "2,"]
+# def handle_client(conn):
+#     global currentId, pos
+#     conn.send(str.encode(currentId))
+#     currentId = "2"
+#     reply = ''
+#     while True:
+#         try:
+#             data = conn.recv(2048)
+#             reply = data.decode('utf-8')
+#             if not data:
+#                 conn.send(str.encode("Goodbye"))
+#                 break
+#             else:
+#                 print("Received: " + reply)
+#                 arr = reply.split(":")
+#                 id = int(arr[0])
+#                 pos[id] = reply
+#
+#                 if id == 1: nid = 2
+#                 if id == 2: nid = 1
+#
+#                 reply = pos[nid][:]
+#                 print("Sending: " + reply)
+#
+#             conn.sendall(str.encode(reply))
+#         except:
+#             break
+#
+#     print("Connection Closed")
+#     conn.close()
+
 
 def start():
-    server.listen()
+    server.listen(2)  # Max connections: 2
     print(f"[LISTENING] Server is listening on {SERVER}")
     while True:
         # server_command = input("Type \"exit\" to close server\n")
@@ -47,6 +80,10 @@ def start():
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
+
+
+# def get_connection_count():
+#     return threading.active_count()-1
 
 
 print("[STARTING] server is starting...")
