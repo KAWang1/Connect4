@@ -6,9 +6,9 @@ URL = "https://api.ngrok.com/endpoints"
 headers = {'Ngrok-Version': "2",
            'Authorization': "Bearer 2CI6sbfv4heZOCdC02O7xFtGEyc_5zWyf7cr8oNDLWQH4EXhE"}
 response = requests.request("GET", URL, headers=headers).text
-print(response.split(',')[6].strip()[12:32])  # gets ip and port
-print(response.split(',')[6].strip()[12:26])  # gets ip
-print(response.split(',')[6].strip()[27:32])  # gets port
+# print(response.split(',')[6].strip()[12:32])  # gets ip and port
+# print(response.split(',')[6].strip()[12:26])  # gets ip
+# print(response.split(',')[6].strip()[27:32])  # gets port
 
 
 # Variables
@@ -32,7 +32,15 @@ def send(msg):
     send_length += b' ' * (HEADER - len(send_length))
     client.send(send_length)
     client.send(message)
-    print(client.recv(2048).decode(FORMAT))
+    # receive_message = client.recv(2048).decode(FORMAT)
+    # player_number = receive_message[0:1]
+    # player_move = receive_message[2:3]
+    # print(player_number, player_move)
+
+
+def get_player_move():
+    receive_message = client.recv(2048).decode(FORMAT)
+    return receive_message[2:3]
 
 
 # input_message = 1

@@ -30,7 +30,8 @@ def handle_client(conn, addr):
                 print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 2}")
 
             print(f"[{addr}] {msg}")
-            conn.send("Msg received".encode(FORMAT))
+            # conn.send("Msg received".encode(FORMAT))
+            conn.send(f"{msg}".encode(FORMAT))
 
     conn.close()
 
