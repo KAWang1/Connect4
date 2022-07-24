@@ -3,7 +3,7 @@ import sys
 
 from butto import Button
 # import game
-from game import selection1
+from game import selection1, selection3, selection4
 
 pygame.init()
 
@@ -11,13 +11,6 @@ SCREEN = pygame.display.set_mode((700, 700))
 pygame.display.set_caption("Menu")
 
 BG = pygame.image.load("assets/connect_four.jpg")
-
-selection = 0
-
-
-def set_selection(num):
-    global selection
-    selection = num
 
 
 def get_font(size):  # Returns Press-Start-2P in the desired size
@@ -80,18 +73,50 @@ def multi():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if MULTI_LOCAL.checkForInput(MULTI_MOUSE_POS):
-                    set_selection(1)
-                    # pygame.quit()
-                    # sys.exit()
                     selection1()
-                    print(selection)
                 if MULTI_ONLINE.checkForInput(MULTI_MOUSE_POS):
-                    set_selection(3)
+                    online()
                 if MULTI_BACK.checkForInput(MULTI_MOUSE_POS):
                     main_menu()
 
         pygame.display.update()
 
+def online():
+    while True:
+        SCREEN.blit(BG, (0, 0))
+
+        MULTI_MOUSE_POS = pygame.mouse.get_pos()
+
+        # SCREEN.fill("black")
+
+        MULTI_TEXT = get_font(100).render("Player", True, "#b68f40")
+        MULTI_RECT = MULTI_TEXT.get_rect(center=(350, 100))
+        SCREEN.blit(MULTI_TEXT, MULTI_RECT)
+
+        MULTI_LOCAL = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 250),
+                              text_input="PLAYER 1", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+        MULTI_ONLINE = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 400),
+                            text_input="PLAYER 2", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+        MULTI_BACK = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 550),
+                              text_input="BACK", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+
+        for button in [MULTI_LOCAL, MULTI_ONLINE, MULTI_BACK]:
+            button.changeColor(MULTI_MOUSE_POS)
+            button.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if MULTI_LOCAL.checkForInput(MULTI_MOUSE_POS):
+                    selection3()
+                if MULTI_ONLINE.checkForInput(MULTI_MOUSE_POS):
+                    selection4()
+                if MULTI_BACK.checkForInput(MULTI_MOUSE_POS):
+                    multi()
+
+        pygame.display.update()
 
 def main_menu():
     while True:

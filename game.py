@@ -129,10 +129,10 @@ size = (width, height)
 RADIUS = int(SQUARESIZE / 2 - 5)
 screen = pygame.display.set_mode(size)
 
-
+board = create_board()
 # if selection == 1:
 def selection1():
-    board = create_board()
+
     game_over = False
     turn = 0
     # initialize pygame
@@ -248,6 +248,17 @@ def selection1():
 # if selection == 2:
 # ----------------------------------------------START AI CODE-----------------------------------------------------------
 def selection2():
+    game_over = False
+    turn = 0
+    # initialize pygame
+    pygame.init()
+    # define our screen size
+
+    # Calling function draw_board again
+    draw_board(board)
+    pygame.display.update()
+    myfont = pygame.font.SysFont("monospace", 75)
+
     print("  0  1  2  3  4  5  6")
     print_board(board)
     while not game_over:
@@ -298,113 +309,139 @@ def selection2():
 # Online
 # if selection == 3:
 def selection3():
-    player_num = int(input("1) Player 1\n2) Player 2\n"))
+    game_over = False
+    turn = 0
+    # initialize pygame
+    pygame.init()
+    # define our screen size
+
+    # Calling function draw_board again
+    draw_board(board)
+    pygame.display.update()
+    myfont = pygame.font.SysFont("monospace", 75)
+
+    # player_num = int(input("1) Player 1\n2) Player 2\n"))
 # Player 1
-    if player_num == 1:
-        print("  0  1  2  3  4  5  6")
-        print_board(board)
-        while not game_over:
-            if turn == 0:
-                col = int(input("Player 1: Select Column(0-6):"))  # Ask for player 1 input
-                message = f"1,{col}"
-                send(message)
-                receive()
-                if is_valid(board, col):  # If valid move, Player 1 will drop a piece on the board
-                    row = next_row(board, col)
-                    play_piece(board, row, col, 1)
-                    if win(board, 1):
-                        print("Player 1 Wins")
-                        game_over = True
-                else:
-                    if board_full():
-                        print("Tie")
-                        game_over = True
-                    else:
-                        print("Move not valid")
-                        turn += 1
-                        turn = turn % 2
-            # Ask for player 2 input
+#     if player_num == 1:
+    print("  0  1  2  3  4  5  6")
+    print_board(board)
+    draw_board(board)
+    pygame.display.update()
+    while not game_over:
+        if turn == 0:
+            col = int(input("Player 1: Select Column(0-6):"))  # Ask for player 1 input
+            message = f"1,{col}"
+            send(message)
+            receive()
+            if is_valid(board, col):  # If valid move, Player 1 will drop a piece on the board
+                row = next_row(board, col)
+                play_piece(board, row, col, 1)
+                if win(board, 1):
+                    print("Player 1 Wins")
+                    game_over = True
             else:
-                while get_player_number() != 2:
-                    time.sleep(1)
-                    receive()
-                col = get_player_move()
-                if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
-                    row = next_row(board, col)
-                    play_piece(board, row, col, 2)
-                    if win(board, 2):
-                        print("Player 2 Wins")
-                        game_over = True
+                if board_full():
+                    print("Tie")
+                    game_over = True
                 else:
-                    if board_full():
-                        print("Tie")
-                        game_over = True
-                    else:
-                        print("Move not valid")
-                        turn += 1
-                        turn = turn % 2
-
-            print("  0  1  2  3  4  5  6")
-            print_board(board)
-
-            turn += 1
-            turn = turn % 2
-
-
-# Player 2
-    if player_num == 2:
-        print("  0  1  2  3  4  5  6")
-        print_board(board)
-        while not game_over:
-            print(get_player_number(), "player num")
-            while get_player_number() != 1:
+                    print("Move not valid")
+                    turn += 1
+                    turn = turn % 2
+        # Ask for player 2 input
+        else:
+            while get_player_number() != 2:
                 time.sleep(1)
-                print(get_player_number(), "player num")
                 receive()
-            # Ask for player 1 input
-            if turn == 0:
-                print(get_player_move(), "player move")
-                col = get_player_move()
-                if is_valid(board, col):  # If valid, Player 1 will drop a piece on the board
-                    row = next_row(board, col)
-                    play_piece(board, row, col, 1)
-                    if win(board, 1):
-                        print("Player 1 Wins")
-                        game_over = True
-                else:
-                    if board_full():
-                        print("Tie")
-                        game_over = True
-                    else:
-                        print("Move not valid")
-                        turn += 1
-                        turn = turn % 2
-            # Ask for player 2 input
+            col = get_player_move()
+            if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
+                row = next_row(board, col)
+                play_piece(board, row, col, 2)
+                if win(board, 2):
+                    print("Player 2 Wins")
+                    game_over = True
             else:
-                col = int(input("Player 2: Select Column(0-6):"))
-                message = f"2,{col}"
-                send(message)
-                receive()
-                if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
-                    row = next_row(board, col)
-                    play_piece(board, row, col, 2)
-                    if win(board, 2):
-                        print("Player 2 Wins")
-                        game_over = True
+                if board_full():
+                    print("Tie")
+                    game_over = True
                 else:
-                    if board_full():
-                        print("Tie")
-                        game_over = True
-                    else:
-                        print("Move not valid")
-                        turn += 1
-                        turn = turn % 2
+                    print("Move not valid")
+                    turn += 1
+                    turn = turn % 2
 
-            print("  0  1  2  3  4  5  6")
-            print_board(board)
+        print("  0  1  2  3  4  5  6")
+        print_board(board)
 
-            turn += 1
-            turn = turn % 2
+        turn += 1
+        turn = turn % 2
+
+def selection4():
+# Player 2
+#     if player_num == 2:
+    game_over = False
+    turn = 0
+    # initialize pygame
+    pygame.init()
+    # define our screen size
+
+    # Calling function draw_board again
+    draw_board(board)
+    pygame.display.update()
+    myfont = pygame.font.SysFont("monospace", 75)
+
+    print("  0  1  2  3  4  5  6")
+    print_board(board)
+    draw_board(board)
+    pygame.display.update()
+    while not game_over:
+        print(get_player_number(), "player num")
+        while get_player_number() != 1:
+            time.sleep(1)
+            print(get_player_number(), "player num")
+            receive()
+        # Ask for player 1 input
+        if turn == 0:
+            print(get_player_move(), "player move")
+            col = get_player_move()
+            if is_valid(board, col):  # If valid, Player 1 will drop a piece on the board
+                row = next_row(board, col)
+                play_piece(board, row, col, 1)
+                if win(board, 1):
+                    print("Player 1 Wins")
+                    game_over = True
+            else:
+                if board_full():
+                    print("Tie")
+                    game_over = True
+                else:
+                    print("Move not valid")
+                    turn += 1
+                    turn = turn % 2
+        # Ask for player 2 input
+        else:
+            col = int(input("Player 2: Select Column(0-6):"))
+            message = f"2,{col}"
+            send(message)
+            receive()
+            if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
+                row = next_row(board, col)
+                play_piece(board, row, col, 2)
+                if win(board, 2):
+                    print("Player 2 Wins")
+                    game_over = True
+            else:
+                if board_full():
+                    print("Tie")
+                    game_over = True
+                else:
+                    print("Move not valid")
+                    turn += 1
+                    turn = turn % 2
+
+        print("  0  1  2  3  4  5  6")
+        print_board(board)
+
+        turn += 1
+        turn = turn % 2
 # Exit
 # else:
 # def selection4():

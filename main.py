@@ -10,3 +10,5 @@ while title.selection == 0:
         game.selection2()
     if title.selection == 3:
         game.selection3()
+    if title.selection == 3:
+        game.selection3()
