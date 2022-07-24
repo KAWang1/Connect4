@@ -15,7 +15,7 @@ WINDOW_LENGTH = 4
 EMPTY = 0
 PLAYER_PIECE = 1
 AI_PIECE = 2
-Gamemode = "AIEasy"
+Gamemode = "AIHard"
 depth = 0
 
 def create_board():
@@ -206,19 +206,19 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 # Minimum step
     else:
         value = math.inf;
-    column = random.choice(valid_locations);
-    for col in valid_locations:
-        row = get_next_open_row(board, col)
-        b_copy = board.copy()
-        drop_piece(b_copy, row, col, PLAYER_PIECE)
-        new_score = minimax(b_copy, depth - 1, alpha, beta, True)[1]
-        if new_score < value:
-            value = new_score
-            column = col
-        beta = min(beta, value)
-        if alpha >= beta:
-            break
-    return column, value
+        column = random.choice(valid_locations);
+        for col in valid_locations:
+            row = get_next_open_row(board, col)
+            b_copy = board.copy()
+            drop_piece(b_copy, row, col, PLAYER_PIECE)
+            new_score = minimax(b_copy, depth - 1, alpha, beta, True)[1]
+            if new_score < value:
+                value = new_score
+                column = col
+                beta = min(beta, value)
+                if alpha >= beta:
+                    break
+        return column, value
 
 
 board = create_board()
@@ -261,7 +261,7 @@ while not game_over:
             else:
                 pygame.draw.circle(screen, YELLOW, (posx, int(SQUARESIZE / 2)), RADIUS)
 
-        pygame.display.update()
+            pygame.display.update()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
@@ -283,8 +283,8 @@ while not game_over:
 
             elif turn == 1:
                 if Gamemode == "AIEasy":
-                # Random move for Player2
-                    col = random.randint(0, 6)
+                # Random move for Player 2
+                    col = random.randint(0,6)
 
                     if is_valid_location(board, col):
                         row = get_next_open_row(board, col)
@@ -300,8 +300,7 @@ while not game_over:
                 elif Gamemode == "AIHard":
                     if turn == 1 and not game_over:  # asking for Player 2
 
-                        col, minimax_score = minimax(board, depth=5, alpha=-math.inf, beta=math.inf, maximinzingPlayer=True)
-
+                        col, minimax_score = minimax(board, depth=5, alpha=-math.inf, beta=math.inf, maximizingPlayer=True)
                         if is_valid_location(board, col):
                             get_next_open_row(board, col)
                             drop_piece(board, row, col, AI_PIECE)
