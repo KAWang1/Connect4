@@ -281,7 +281,7 @@ while not game_over:
                         screen.blit(label, (40, 10))
                         game_over = True
 
-            else:
+            elif turn == 1:
                 if Gamemode == "AIEasy":
                 # Random move for Player2
                     col = random.randint(0, 6)
