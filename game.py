@@ -196,11 +196,11 @@ def selection1():
 
             if event.type == pygame.MOUSEMOTION:
                 pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
-                posx = event.pos[0]
+                col = event.pos[0]
                 if turn == 0:
-                    pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE / 2)), RADIUS)
+                    pygame.draw.circle(screen, RED, (col, int(SQUARESIZE / 2)), RADIUS)
                 else:
-                    pygame.draw.circle(screen, YELLOW, (posx, int(SQUARESIZE / 2)), RADIUS)
+                    pygame.draw.circle(screen, YELLOW, (col, int(SQUARESIZE / 2)), RADIUS)
             pygame.display.update()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -208,8 +208,8 @@ def selection1():
                 # print(event.pos)
                 # Ask for Player 1 Input
                 if turn == 0:
-                    posx = event.pos[0]
-                    col = int(math.floor(posx / SQUARESIZE))
+                    col = event.pos[0]
+                    col = int(math.floor(col / SQUARESIZE))
 
                     if is_valid(board, col):
                         row = next_row(board, col)
@@ -223,8 +223,8 @@ def selection1():
 
                 # Ask for Player 2 Input
                 else:
-                    posx = event.pos[0]
-                    col = int(math.floor(posx / SQUARESIZE))
+                    col = event.pos[0]
+                    col = int(math.floor(col / SQUARESIZE))
 
                     if is_valid(board, col):
                         row = next_row(board, col)
@@ -328,55 +328,78 @@ def selection3():
     draw_board(board)
     pygame.display.update()
     while not game_over:
-        if turn == 0:
-            col = int(input("Player 1: Select Column(0-6):"))  # Ask for player 1 input
-            message = f"1,{col}"
-            send(message)
-            receive()
-            if is_valid(board, col):  # If valid move, Player 1 will drop a piece on the board
-                row = next_row(board, col)
-                play_piece(board, row, col, 1)
-                if win(board, 1):
-                    print("Player 1 Wins")
-                    game_over = True
-            else:
-                if board_full():
-                    print("Tie")
-                    game_over = True
-                else:
-                    print("Move not valid")
-                    turn += 1
-                    turn = turn % 2
-        # Ask for player 2 input
-        else:
-            while get_player_number() != 2:
-                time.sleep(1)
-                receive()
-            col = get_player_move()
-            if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
-                row = next_row(board, col)
-                play_piece(board, row, col, 2)
-                if win(board, 2):
-                    print("Player 2 Wins")
-                    game_over = True
-            else:
-                if board_full():
-                    print("Tie")
-                    game_over = True
-                else:
-                    print("Move not valid")
-                    turn += 1
-                    turn = turn % 2
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
 
-        print("  0  1  2  3  4  5  6")
-        print_board(board)
+            if event.type == pygame.MOUSEMOTION:
+                pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
+                col = event.pos[0]
+                if turn == 0:
+                    pygame.draw.circle(screen, RED, (col, int(SQUARESIZE / 2)), RADIUS)
+                else:
+                    while get_player_number() != 2:
+                        time.sleep(1)
+                        receive()
+                    col = get_player_move()
+                    pygame.draw.circle(screen, YELLOW, (col, int(SQUARESIZE / 2)), RADIUS)
+            pygame.display.update()
 
-        turn += 1
-        turn = turn % 2
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
+                if turn == 0:
+                    # col = int(input("Player 1: Select Column(0-6):"))  # Ask for player 1 input
+                    col = event.pos[0]
+                    col = int(math.floor(col / SQUARESIZE))
+                    message = f"1,{col}"
+                    send(message)
+                    receive()
+                    if is_valid(board, col):  # If valid move, Player 1 will drop a piece on the board
+                        row = next_row(board, col)
+                        play_piece(board, row, col, 1)
+
+                        if win(board, 1):
+                            # print("Player 1 Wins")
+                            label = myfont.render("Player 1 wins!!", 1, RED)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+                    else:
+                        if board_full():
+                            # print("Tie")
+                            label = myfont.render("Tie!!", 1, BLUE)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+
+                # Ask for player 2 input
+                else:
+                    while get_player_number() != 2:
+                        time.sleep(1)
+                        receive()
+                    col = get_player_move()
+                    col = int(math.floor(col / SQUARESIZE))
+
+                    if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
+                        row = next_row(board, col)
+                        play_piece(board, row, col, 2)
+
+                        if win(board, 2):
+                            label = myfont.render("Player 2 wins!!", 1, YELLOW)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+                    else:
+                        if board_full():
+                            label = myfont.render("Tie!!", 1, BLUE)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+
+                print("  0  1  2  3  4  5  6")
+                print_board(board)
+
+                turn += 1
+                turn = turn % 2
 
 def selection4():
-# Player 2
-#     if player_num == 2:
+
     game_over = False
     turn = 0
     # initialize pygame
@@ -388,60 +411,87 @@ def selection4():
     pygame.display.update()
     myfont = pygame.font.SysFont("monospace", 75)
 
+    # player_num = int(input("1) Player 1\n2) Player 2\n"))
+    # Player 1
+    #     if player_num == 1:
     print("  0  1  2  3  4  5  6")
     print_board(board)
     draw_board(board)
     pygame.display.update()
     while not game_over:
-        print(get_player_number(), "player num")
-        while get_player_number() != 1:
-            time.sleep(1)
-            print(get_player_number(), "player num")
-            receive()
-        # Ask for player 1 input
-        if turn == 0:
-            print(get_player_move(), "player move")
-            col = get_player_move()
-            if is_valid(board, col):  # If valid, Player 1 will drop a piece on the board
-                row = next_row(board, col)
-                play_piece(board, row, col, 1)
-                if win(board, 1):
-                    print("Player 1 Wins")
-                    game_over = True
-            else:
-                if board_full():
-                    print("Tie")
-                    game_over = True
-                else:
-                    print("Move not valid")
-                    turn += 1
-                    turn = turn % 2
-        # Ask for player 2 input
-        else:
-            col = int(input("Player 2: Select Column(0-6):"))
-            message = f"2,{col}"
-            send(message)
-            receive()
-            if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
-                row = next_row(board, col)
-                play_piece(board, row, col, 2)
-                if win(board, 2):
-                    print("Player 2 Wins")
-                    game_over = True
-            else:
-                if board_full():
-                    print("Tie")
-                    game_over = True
-                else:
-                    print("Move not valid")
-                    turn += 1
-                    turn = turn % 2
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
 
-        print("  0  1  2  3  4  5  6")
-        print_board(board)
+            if event.type == pygame.MOUSEMOTION:
+                pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
+                col = event.pos[0]
+                if turn == 1:
+                    pygame.draw.circle(screen, YELLOW, (col, int(SQUARESIZE / 2)), RADIUS)
+                else:
+                    while get_player_number() != 1:
+                        time.sleep(1)
+                        receive()
+                    col = get_player_move()
+                    pygame.draw.circle(screen, RED, (col, int(SQUARESIZE / 2)), RADIUS)
+            pygame.display.update()
 
-        turn += 1
-        turn = turn % 2
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
+                while get_player_number() != 1:
+                    time.sleep(1)
+                    print(get_player_number(), "player num")
+                    receive()
+                if turn == 0:
+                    # col = int(input("Player 1: Select Column(0-6):"))  # Ask for player 1 input
+                    col = get_player_move()
+                    col = int(math.floor(col / SQUARESIZE))
+                    if is_valid(board, col):  # If valid move, Player 1 will drop a piece on the board
+                        row = next_row(board, col)
+                        play_piece(board, row, col, 1)
+
+                        if win(board, 1):
+                            # print("Player 1 Wins")
+                            label = myfont.render("Player 1 wins!!", 1, RED)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+                    else:
+                        if board_full():
+                            # print("Tie")
+                            label = myfont.render("Tie!!", 1, BLUE)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+
+                # Ask for player 2 input
+                else:
+                    col = event.pos[0]
+                    col = int(math.floor(col / SQUARESIZE))
+                    message = f"2,{col}"
+                    send(message)
+                    receive()
+
+                    if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
+                        row = next_row(board, col)
+                        play_piece(board, row, col, 2)
+
+                        if win(board, 2):
+                            label = myfont.render("Player 2 wins!!", 1, YELLOW)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+                    else:
+                        if board_full():
+                            label = myfont.render("Tie!!", 1, BLUE)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+
+                print("  0  1  2  3  4  5  6")
+                print_board(board)
+
+                turn += 1
+                turn = turn % 2
+
+
+
 # Exit
 # else:
 # def selection4():
@@ -456,11 +506,11 @@ def selection4():
 #
 #         if event.type == pygame.MOUSEMOTION:
 #             pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
-#             posx = event.pos[0]
+#             col = event.pos[0]
 #             if turn == 0:
-#                 pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE / 2)), RADIUS)
+#                 pygame.draw.circle(screen, RED, (col, int(SQUARESIZE / 2)), RADIUS)
 #             else:
-#                 pygame.draw.circle(screen, YELLOW, (posx, int(SQUARESIZE / 2)), RADIUS)
+#                 pygame.draw.circle(screen, YELLOW, (col, int(SQUARESIZE / 2)), RADIUS)
 #         pygame.display.update()
 #
 #         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -468,8 +518,8 @@ def selection4():
 #             # print(event.pos)
 #             # Ask for Player 1 Input
 #             if turn == 0:
-#                 posx = event.pos[0]
-#                 col = int(math.floor(posx / SQUARESIZE))
+#                 col = event.pos[0]
+#                 col = int(math.floor(col / SQUARESIZE))
 #
 #                 if is_valid(board, col):
 #                     row = next_row(board, col)
@@ -483,8 +533,8 @@ def selection4():
 #
 #             # Ask for Player 2 Input
 #             else:
-#                 posx = event.pos[0]
-#                 col = int(math.floor(posx / SQUARESIZE))
+#                 col = event.pos[0]
+#                 col = int(math.floor(col / SQUARESIZE))
 #
 #                 if is_valid(board, col):
 #                     row = next_row(board, col)
