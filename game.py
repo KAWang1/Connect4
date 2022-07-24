@@ -216,7 +216,14 @@ def selection1():
                         play_piece(board, row, col, 1)
 
                         if win(board, 1):
-                            label = myfont.render("Player 1 wins!!", 1, RED)
+                            label = myfont.render("Player 1 wins!", 1, RED)
+                            screen.blit(label, (40, 10))
+                            game_over = True
+
+                    else:
+                        if board_full():
+                            # print("Tie")
+                            label = myfont.render("Tie!", 1, BLUE)
                             screen.blit(label, (40, 10))
                             game_over = True
 
@@ -338,14 +345,10 @@ def selection3():
                 if turn == 0:
                     pygame.draw.circle(screen, RED, (col, int(SQUARESIZE / 2)), RADIUS)
                 else:
-                    while get_player_number() != 2:
-                        time.sleep(1)
-                        receive()
-                    col = get_player_move()
-                    pygame.draw.circle(screen, YELLOW, (col, int(SQUARESIZE / 2)), RADIUS)
+                    pygame.draw.circle(screen, BLACK, (col, int(SQUARESIZE / 2)), RADIUS)
             pygame.display.update()
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN or turn == 1:
                 pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
                 if turn == 0:
                     # col = int(input("Player 1: Select Column(0-6):"))  # Ask for player 1 input
@@ -360,13 +363,13 @@ def selection3():
 
                         if win(board, 1):
                             # print("Player 1 Wins")
-                            label = myfont.render("Player 1 wins!!", 1, RED)
+                            label = myfont.render("Player 1 wins!", 1, RED)
                             screen.blit(label, (40, 10))
                             game_over = True
                     else:
                         if board_full():
                             # print("Tie")
-                            label = myfont.render("Tie!!", 1, BLUE)
+                            label = myfont.render("Tie!", 1, BLUE)
                             screen.blit(label, (40, 10))
                             game_over = True
 
@@ -376,27 +379,31 @@ def selection3():
                         time.sleep(1)
                         receive()
                     col = get_player_move()
-                    col = int(math.floor(col / SQUARESIZE))
 
                     if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
                         row = next_row(board, col)
                         play_piece(board, row, col, 2)
 
                         if win(board, 2):
-                            label = myfont.render("Player 2 wins!!", 1, YELLOW)
+                            label = myfont.render("Player 2 wins!", 1, YELLOW)
                             screen.blit(label, (40, 10))
                             game_over = True
                     else:
                         if board_full():
-                            label = myfont.render("Tie!!", 1, BLUE)
+                            label = myfont.render("Tie!", 1, BLUE)
                             screen.blit(label, (40, 10))
                             game_over = True
 
                 print("  0  1  2  3  4  5  6")
                 print_board(board)
+                draw_board(board)
 
                 turn += 1
                 turn = turn % 2
+
+                if game_over:
+                    pygame.time.wait(3000)
+
 
 def selection4():
 
@@ -429,36 +436,30 @@ def selection4():
                 if turn == 1:
                     pygame.draw.circle(screen, YELLOW, (col, int(SQUARESIZE / 2)), RADIUS)
                 else:
-                    while get_player_number() != 1:
-                        time.sleep(1)
-                        receive()
-                    col = get_player_move()
-                    pygame.draw.circle(screen, RED, (col, int(SQUARESIZE / 2)), RADIUS)
+                    pygame.draw.circle(screen, BLACK, (col, int(SQUARESIZE / 2)), RADIUS)
             pygame.display.update()
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN or turn == 0:
                 pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
                 while get_player_number() != 1:
                     time.sleep(1)
-                    print(get_player_number(), "player num")
                     receive()
                 if turn == 0:
                     # col = int(input("Player 1: Select Column(0-6):"))  # Ask for player 1 input
                     col = get_player_move()
-                    col = int(math.floor(col / SQUARESIZE))
                     if is_valid(board, col):  # If valid move, Player 1 will drop a piece on the board
                         row = next_row(board, col)
                         play_piece(board, row, col, 1)
 
                         if win(board, 1):
                             # print("Player 1 Wins")
-                            label = myfont.render("Player 1 wins!!", 1, RED)
+                            label = myfont.render("Player 1 wins!", 1, RED)
                             screen.blit(label, (40, 10))
                             game_over = True
                     else:
                         if board_full():
                             # print("Tie")
-                            label = myfont.render("Tie!!", 1, BLUE)
+                            label = myfont.render("Tie!", 1, BLUE)
                             screen.blit(label, (40, 10))
                             game_over = True
 
@@ -475,20 +476,24 @@ def selection4():
                         play_piece(board, row, col, 2)
 
                         if win(board, 2):
-                            label = myfont.render("Player 2 wins!!", 1, YELLOW)
+                            label = myfont.render("Player 2 wins!", 1, YELLOW)
                             screen.blit(label, (40, 10))
                             game_over = True
                     else:
                         if board_full():
-                            label = myfont.render("Tie!!", 1, BLUE)
+                            label = myfont.render("Tie!", 1, BLUE)
                             screen.blit(label, (40, 10))
                             game_over = True
 
                 print("  0  1  2  3  4  5  6")
                 print_board(board)
+                draw_board(board)
 
                 turn += 1
                 turn = turn % 2
+
+                if game_over:
+                    pygame.time.wait(3000)
 
 
 
