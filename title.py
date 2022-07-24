@@ -3,7 +3,7 @@ import sys
 
 from butto import Button
 # import game
-from game import selection1, selection3, selection4
+from game import selection1, selection3, selection4, selection2
 
 pygame.init()
 
@@ -29,7 +29,11 @@ def single():
 
         SINGLE_BACK = Button(image=None, pos=(350, 460),
                            text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
-
+        SINGLE_AI = Button(image=None, pos=(350, 360),
+                           text_input="AI", font=get_font(75), base_color="White", hovering_color="Green")
+        
+        SINGLE_AI.changeColor(SINGLE_MOUSE_POS)
+        SINGLE_AI.update(SCREEN)
         SINGLE_BACK.changeColor(SINGLE_MOUSE_POS)
         SINGLE_BACK.update(SCREEN)
 
