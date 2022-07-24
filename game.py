@@ -1,12 +1,8 @@
 import time
-
 import numpy as np
-
-# Constant Row and Column length
 from client import send, get_player_move, get_player_number, receive
 
-# from server import get_connection_count
-
+# Constant Row and Column length
 ROW_COUNT = 6
 COL_COUNT = 7
 
@@ -90,6 +86,7 @@ def win(board, piece):
                 return True
 
 
+# Create board
 board = create_board()
 game_over = False
 turn = 0
@@ -104,8 +101,7 @@ if selection == 1:
         # Ask for player 1 input
         if turn == 0:
             col = int(input("Player 1: Select Column(0-6):"))
-            # Player 1 will drop a piece on the board
-            if is_valid(board, col):
+            if is_valid(board, col):  # If Valid, Player 1 will drop a piece on the board
                 row = next_row(board, col)
                 play_piece(board, row, col, 1)
                 if win(board, 1):
@@ -122,8 +118,7 @@ if selection == 1:
         # Ask for player 2 input
         else:
             col = int(input("Player 2: Select Column(0-6):"))
-            # Player 2 will drop a piece on the board
-            if is_valid(board, col):
+            if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
                 row = next_row(board, col)
                 play_piece(board, row, col, 2)
                 if win(board, 2):
@@ -146,7 +141,7 @@ if selection == 1:
 
 # Player vs AI
 if selection == 2:
-    # ADD AI CODE------------------------------------------------------------------
+# ----------------------------------------------START AI CODE-----------------------------------------------------------
     print("  0  1  2  3  4  5  6")
     print_board(board)
     while not game_over:
@@ -192,24 +187,22 @@ if selection == 2:
 
         turn += 1
         turn = turn % 2
+# ----------------------------------------------END AI CODE-----------------------------------------------------------
 
-# Online Player 1
+# Online
 if selection == 3:
-    # while get_connection_count() != 2:
-    #     time.sleep(1)
     player_num = int(input("1) Player 1\n2) Player 2\n"))
+# Player 1
     if player_num == 1:
         print("  0  1  2  3  4  5  6")
         print_board(board)
         while not game_over:
-            # Ask for player 1 input
             if turn == 0:
-                col = int(input("Player 1: Select Column(0-6):"))
+                col = int(input("Player 1: Select Column(0-6):"))  # Ask for player 1 input
                 message = f"1,{col}"
                 send(message)
                 receive()
-                # Player 1 will drop a piece on the board
-                if is_valid(board, col):
+                if is_valid(board, col):  # If valid move, Player 1 will drop a piece on the board
                     row = next_row(board, col)
                     play_piece(board, row, col, 1)
                     if win(board, 1):
@@ -226,12 +219,10 @@ if selection == 3:
             # Ask for player 2 input
             else:
                 while get_player_number() != 2:
-                    time.sleep(2)
+                    time.sleep(1)
                     receive()
-                # col = int(input("Player 2: Select Column(0-6):"))
                 col = get_player_move()
-                # Player 2 will drop a piece on the board
-                if is_valid(board, col):
+                if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
                     row = next_row(board, col)
                     play_piece(board, row, col, 2)
                     if win(board, 2):
@@ -253,23 +244,21 @@ if selection == 3:
             turn = turn % 2
 
 
-# Online Player 2
+# Player 2
     if player_num == 2:
         print("  0  1  2  3  4  5  6")
         print_board(board)
         while not game_over:
             print(get_player_number(), "player num")
             while get_player_number() != 1:
-                time.sleep(2)
+                time.sleep(1)
                 print(get_player_number(), "player num")
                 receive()
             # Ask for player 1 input
             if turn == 0:
-                # col = int(input("Player 1: Select Column(0-6):"))
                 print(get_player_move(), "player move")
                 col = get_player_move()
-                # Player 1 will drop a piece on the board
-                if is_valid(board, col):
+                if is_valid(board, col):  # If valid, Player 1 will drop a piece on the board
                     row = next_row(board, col)
                     play_piece(board, row, col, 1)
                     if win(board, 1):
@@ -289,8 +278,7 @@ if selection == 3:
                 message = f"2,{col}"
                 send(message)
                 receive()
-                # Player 2 will drop a piece on the board
-                if is_valid(board, col):
+                if is_valid(board, col):  # If valid, Player 2 will drop a piece on the board
                     row = next_row(board, col)
                     play_piece(board, row, col, 2)
                     if win(board, 2):
@@ -310,6 +298,7 @@ if selection == 3:
 
             turn += 1
             turn = turn % 2
+# Exit
 else:
     game_over = True
 
