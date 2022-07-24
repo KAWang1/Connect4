@@ -227,6 +227,7 @@ if selection == 3:
             else:
                 while get_player_number() != 2:
                     time.sleep(2)
+                    receive()
                 # col = int(input("Player 2: Select Column(0-6):"))
                 col = get_player_move()
                 # Player 2 will drop a piece on the board
@@ -261,7 +262,7 @@ if selection == 3:
             while get_player_number() != 1:
                 time.sleep(2)
                 print(get_player_number(), "player num")
-                # receive()
+                receive()
             # Ask for player 1 input
             if turn == 0:
                 # col = int(input("Player 1: Select Column(0-6):"))
