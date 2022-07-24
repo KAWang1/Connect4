@@ -44,6 +44,8 @@ def single():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if SINGLE_BACK.checkForInput(SINGLE_MOUSE_POS):
                     main_menu()
+                if SINGLE_AI.checkForInput(SINGLE_MOUSE_POS):
+                    selection2()
 
         pygame.display.update()
 
