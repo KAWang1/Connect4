@@ -3,10 +3,11 @@ import sys
 
 from butto import Button
 # import game
+from game import selection1
 
 pygame.init()
 
-SCREEN = pygame.display.set_mode((1280, 720))
+SCREEN = pygame.display.set_mode((700, 700))
 pygame.display.set_caption("Menu")
 
 BG = pygame.image.load("assets/connect_four.jpg")
@@ -30,10 +31,10 @@ def single():
         SCREEN.fill("black")
 
         SINGLE_TEXT = get_font(45).render("This is the SINGLE screen.", True, "White")
-        SINGLE_RECT = SINGLE_TEXT.get_rect(center=(640, 260))
+        SINGLE_RECT = SINGLE_TEXT.get_rect(center=(350, 260))
         SCREEN.blit(SINGLE_TEXT, SINGLE_RECT)
 
-        SINGLE_BACK = Button(image=None, pos=(640, 460),
+        SINGLE_BACK = Button(image=None, pos=(350, 460),
                            text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
 
         SINGLE_BACK.changeColor(SINGLE_MOUSE_POS)
@@ -58,15 +59,15 @@ def multi():
 
         # SCREEN.fill("black")
 
-        MULTI_TEXT = get_font(100).render("SELECT GAMEMODE", True, "#b68f40")
-        MULTI_RECT = MULTI_TEXT.get_rect(center=(640, 100))
+        MULTI_TEXT = get_font(100).render("GAMEMODE", True, "#b68f40")
+        MULTI_RECT = MULTI_TEXT.get_rect(center=(350, 100))
         SCREEN.blit(MULTI_TEXT, MULTI_RECT)
 
-        MULTI_LOCAL = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(640, 250),
+        MULTI_LOCAL = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 250),
                               text_input="LOCAL", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        MULTI_ONLINE = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(640, 400),
+        MULTI_ONLINE = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 400),
                             text_input="ONLINE", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        MULTI_BACK = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(640, 550),
+        MULTI_BACK = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(350, 550),
                               text_input="BACK", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
 
         for button in [MULTI_LOCAL, MULTI_ONLINE, MULTI_BACK]:
@@ -80,8 +81,9 @@ def multi():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if MULTI_LOCAL.checkForInput(MULTI_MOUSE_POS):
                     set_selection(1)
-                    pygame.quit()
-                    sys.exit()
+                    # pygame.quit()
+                    # sys.exit()
+                    selection1()
                     print(selection)
                 if MULTI_ONLINE.checkForInput(MULTI_MOUSE_POS):
                     set_selection(3)
@@ -98,13 +100,13 @@ def main_menu():
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
         MENU_TEXT = get_font(100).render("MAIN MENU", True, "#b68f40")
-        MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
+        MENU_RECT = MENU_TEXT.get_rect(center=(350, 100))
 
-        SINGLE_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(640, 250),
+        SINGLE_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(350, 250),
                              text_input="SINGLEPLAYER", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        MULTI_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(640, 400),
+        MULTI_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(350, 400),
                                 text_input="MULTIPLAYER", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(640, 550),
+        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(350, 550),
                              text_input="QUIT", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)

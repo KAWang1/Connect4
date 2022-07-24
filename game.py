@@ -4,7 +4,7 @@ import numpy as np
 import pygame
 import math
 from client import send, get_player_move, get_player_number, receive
-from title import selection
+# from title import selection
 # Constant Row and Column length
 ROW_COUNT = 6
 COL_COUNT = 7
@@ -119,24 +119,26 @@ def draw_board(board):
 # selection = 0
 # Player vs Player
 
-while selection == 0:
-    time.sleep(1)
 
-board = create_board()
-game_over = False
-turn = 0
 
-if selection == 1:
+SQUARESIZE = 100
+# define width and height of board
+width = COL_COUNT * SQUARESIZE
+height = (ROW_COUNT + 1) * SQUARESIZE
+size = (width, height)
+RADIUS = int(SQUARESIZE / 2 - 5)
+screen = pygame.display.set_mode(size)
+
+
+# if selection == 1:
+def selection1():
+    board = create_board()
+    game_over = False
+    turn = 0
     # initialize pygame
     pygame.init()
     # define our screen size
-    SQUARESIZE = 100
-    # define width and height of board
-    width = COL_COUNT * SQUARESIZE
-    height = (ROW_COUNT + 1) * SQUARESIZE
-    size = (width, height)
-    RADIUS = int(SQUARESIZE / 2 - 5)
-    screen = pygame.display.set_mode(size)
+
     # Calling function draw_board again
     draw_board(board)
     pygame.display.update()
@@ -243,8 +245,9 @@ if selection == 1:
                     pygame.time.wait(3000)
 
 # Player vs AI
-if selection == 2:
+# if selection == 2:
 # ----------------------------------------------START AI CODE-----------------------------------------------------------
+def selection2():
     print("  0  1  2  3  4  5  6")
     print_board(board)
     while not game_over:
@@ -293,7 +296,8 @@ if selection == 2:
 # ----------------------------------------------END AI CODE-----------------------------------------------------------
 
 # Online
-if selection == 3:
+# if selection == 3:
+def selection3():
     player_num = int(input("1) Player 1\n2) Player 2\n"))
 # Player 1
     if player_num == 1:
@@ -402,8 +406,9 @@ if selection == 3:
             turn += 1
             turn = turn % 2
 # Exit
-else:
-    game_over = True
+# else:
+# def selection4():
+#     game_over = True
 
 #
 # while not game_over:
