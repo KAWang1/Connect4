@@ -152,7 +152,8 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if SINGLE_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    single()
+                    # single()
+                    selection2()
                 if MULTI_BUTTON.checkForInput(MENU_MOUSE_POS):
                     multi()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
